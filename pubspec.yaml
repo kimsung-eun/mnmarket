@@ -22,4 +22,7 @@ flutter:
 
   assets:
     - assets/images/logo.png
+<<<<<<< HEAD
     - assets/images/sunny.jpeg
+=======
+>>>>>>> 29ce12cec18cb06374be41677a6d423058368fdc
