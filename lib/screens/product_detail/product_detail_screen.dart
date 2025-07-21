@@ -36,12 +36,8 @@ class _D extends State<ProductDetailScreen> {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-<<<<<<< HEAD
           // ✅ 이미지 표시 (asset 또는 network 자동 구분)
           _buildImage(p.imageUrl),
-=======
-          Image.network(p.imageUrl, height: 200, fit: BoxFit.cover),
->>>>>>> 29ce12cec18cb06374be41677a6d423058368fdc
           const SizedBox(height: 12),
           Text(
             p.name,
@@ -116,7 +112,6 @@ class _D extends State<ProductDetailScreen> {
       ),
     ),
   );
-<<<<<<< HEAD
 
   // ✅ 이미지 타입 구분 함수
   Widget _buildImage(String url) {
@@ -126,6 +121,4 @@ class _D extends State<ProductDetailScreen> {
       return Image.asset(url, height: 200, fit: BoxFit.cover);
     }
   }
-=======
->>>>>>> 29ce12cec18cb06374be41677a6d423058368fdc
 }
