@@ -3,7 +3,6 @@ import '../../models/product_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-<<<<<<< HEAD
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -39,18 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
     // 하트 초기 상태도 함께 초기화
     isLiked.addAll(List.generate(products.length, (_) => false));
   }
-=======
-  @override State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final List<ProductModel> products = [];
->>>>>>> 29ce12cec18cb06374be41677a6d423058368fdc
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
       backgroundColor: Colors.white,
       appBar: AppBar(title: const Text('멍냥마켓')),
       body: Padding(
@@ -197,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
 
-              // 하트 (GestureDetector 바깥이라 상세페이지 이동 없음)
+              // 하트 버튼
               IconButton(
                 icon: Icon(
                   isLiked[index] ? Icons.favorite : Icons.favorite_border,
@@ -212,37 +203,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-=======
-      appBar: AppBar(title: const Text('홈')),
-      body: products.isEmpty
-          ? const Center(child: Text('등록된 상품이 없습니다.'))
-          : ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: products.length,
-              itemBuilder: (_, i) {
-                final p = products[i];
-                return Card(
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  child: ListTile(
-                    leading: Image.network(p.imageUrl, width: 60, height: 60, fit: BoxFit.cover),
-                    title: Text(p.name),
-                    subtitle: Text('${p.price}원'),
-                    onTap: () => Navigator.pushNamed(
-                      context,
-                      '/detail',
-                      arguments: p,
-                    ),
-                  ),
-                );
-              },
-            ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final p = await Navigator.pushNamed(context, '/register') as ProductModel?;
-          if (p != null) setState(() => products.add(p));
-        },
-        child: const Icon(Icons.add),
->>>>>>> 29ce12cec18cb06374be41677a6d423058368fdc
       ),
     );
   }
