@@ -13,7 +13,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<ProductModel> products = [];
   final List<bool> isLiked = [];
   final String imagePath = 'assets/images/sunny.jpeg';
-
   final Color brandRed = const Color(0xFFAD2426);
 
   @override
@@ -45,12 +44,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        toolbarHeight: 80, // 앱바 높이 증가
+        toolbarHeight: 80,
         backgroundColor: brandRed,
         title: const Text(
           '멍냥마켓',
           style: TextStyle(
-            fontSize: 30, // 원래 약 20 이므로 2배 크기
+            fontSize: 30,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
@@ -124,8 +123,8 @@ class _HomeScreenState extends State<HomeScreen> {
           final result = await Navigator.pushNamed(context, '/register');
           if (result is ProductModel) {
             setState(() {
-              products.add(result);
-              isLiked.add(false);
+              products.insert(0, result); // 상단에 삽입
+              isLiked.insert(0, false);
             });
           }
         },

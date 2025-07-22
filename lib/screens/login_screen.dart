@@ -17,13 +17,13 @@ class LoginScreen extends StatelessWidget {
           const TextField(obscureText: true, decoration: InputDecoration(labelText: '비밀번호', border: OutlineInputBorder())),
           const SizedBox(height: 24),
           SizedBox(
-            width: double.infinity,
-            height: 50,
-            child: ElevatedButton(
-              onPressed: () => Navigator.pushReplacementNamed(context, '/home'),
-              child: const Text('로그인'),
-            ),
-          ),
+  width: double.infinity,
+  height: 50,
+  child: ElevatedButton(
+    onPressed: () => Navigator.pushReplacementNamed(context, '/'),
+    child: const Text('로그인'),
+  ),
+),
         ]),
       ),
     );

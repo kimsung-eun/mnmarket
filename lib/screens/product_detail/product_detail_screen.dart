@@ -68,6 +68,11 @@ class _D extends State<ProductDetailScreen> {
                   ),
                 ],
               ),
+              const SizedBox(height: 12),
+              Text(
+                '총 결제 금액: ${formatNumber(p.price * qty)}원',
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 24),
               SizedBox(
                 width: double.infinity,
@@ -89,22 +94,9 @@ class _D extends State<ProductDetailScreen> {
                           ),
                           TextButton(
                             onPressed: () {
-                              Navigator.pop(context);
-                              showDialog(
-                                context: context,
-                                builder: (_) => AlertDialog(
-                                  title: const Text('구매 완료'),
-                                  content: Text(
-                                    '${p.name} $qty개 구매 완료 (${formatNumber(qty * p.price)}원)',
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      child: const Text('확인'),
-                                    ),
-                                  ],
-                                ),
-                              );
+                              Navigator.pop(context); // 알림창 닫기
+                              Navigator.popUntil(context,
+                                  (route) => route.settings.name == '/'); // 홈으로 이동
                             },
                             child: const Text('확인'),
                           ),
@@ -114,7 +106,7 @@ class _D extends State<ProductDetailScreen> {
                   },
                   child: const Text(
                     '구매하기',
-                    style: TextStyle(fontSize: 18), // 폰트 크기 ↑
+                    style: TextStyle(fontSize: 18),
                   ),
                 ),
               ),
