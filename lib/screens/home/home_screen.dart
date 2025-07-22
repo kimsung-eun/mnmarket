@@ -13,6 +13,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<ProductModel> products = [];
   final List<bool> isLiked = [];
   final String imagePath = 'assets/images/sunny.jpeg';
+  final String imagePath2 = 'assets/images/cat_toy.png';
   final Color brandRed = const Color(0xFFAD2426);
 
   @override
@@ -25,14 +26,16 @@ class _HomeScreenState extends State<HomeScreen> {
         name: '강아지 상품',
         price: 12000,
         imageUrl: imagePath,
-        description: '기본 등록된 상품입니다.',
+        description: '강아지 상품입니다.',
+        category: 'dog',
       ),
       ProductModel(
         id: 2,
-        name: '강아지 상품',
-        price: 12000,
-        imageUrl: imagePath,
-        description: '기본 등록된 상품입니다.',
+        name: '고양이 상품',
+        price: 13000,
+        imageUrl: imagePath2,
+        description: '고양이 상품입니다.',
+        category: 'cat',
       ),
     ]);
 
@@ -41,6 +44,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final filteredProducts = products
+        .asMap()
+        .entries
+        .where((entry) => entry.value.category == selectedCategory)
+        .toList();
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -70,29 +79,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 }),
                 const SizedBox(width: 16),
                 _buildCategoryButton('고양이', selectedCategory == 'cat', () {
-                  if (selectedCategory == 'cat') return;
                   setState(() {
                     selectedCategory = 'cat';
-                  });
-                  Future.delayed(Duration.zero, () {
-                    showDialog(
-                      context: context,
-                      builder: (_) => AlertDialog(
-                        title: const Text('알림'),
-                        content: const Text('등록된 상품이 없습니다.'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              setState(() {
-                                selectedCategory = 'dog';
-                              });
-                            },
-                            child: const Text('닫기'),
-                          ),
-                        ],
-                      ),
-                    );
                   });
                 }),
               ],
@@ -107,12 +95,15 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 8),
             Expanded(
-              child: selectedCategory == 'cat'
-                  ? const Center(child: Text(''))
+              child: filteredProducts.isEmpty
+                  ? const Center(child: Text('등록된 상품이 없습니다.'))
                   : ListView.builder(
-                      itemCount: products.length,
-                      itemBuilder: (context, index) =>
-                          _buildProductCard(products[index], index),
+                      itemCount: filteredProducts.length,
+                      itemBuilder: (context, index) {
+                        final product = filteredProducts[index].value;
+                        final realIndex = products.indexOf(product);
+                        return _buildProductCard(product, realIndex);
+                      },
                     ),
             ),
           ],
@@ -123,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
           final result = await Navigator.pushNamed(context, '/register');
           if (result is ProductModel) {
             setState(() {
-              products.insert(0, result); // 상단에 삽입
+              products.insert(0, result); // 새 상품을 맨 앞에
               isLiked.insert(0, false);
             });
           }

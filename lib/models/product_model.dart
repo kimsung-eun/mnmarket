@@ -4,6 +4,7 @@ class ProductModel {
   final int price;
   final String imageUrl;
   final String description;
+  final String category; // 'dog' 또는 'cat'
 
   ProductModel({
     required this.id,
@@ -11,5 +12,6 @@ class ProductModel {
     required this.price,
     required this.imageUrl,
     required this.description,
+    required this.category,
   });
 }
