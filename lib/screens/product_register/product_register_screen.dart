@@ -27,7 +27,7 @@ class _ProductRegisterScreenState extends State<ProductRegisterScreen> {
           TextButton(
             onPressed: () {
               setState(() {
-                imageUrl = 'https://picsum.photos/200/300';
+                imageUrl = 'https://picsum.photos/200/300?random=${DateTime.now().millisecondsSinceEpoch}';
               });
               Navigator.pop(context);
             },
