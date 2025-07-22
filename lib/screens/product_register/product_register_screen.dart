@@ -27,7 +27,8 @@ class _ProductRegisterScreenState extends State<ProductRegisterScreen> {
           TextButton(
             onPressed: () {
               setState(() {
-                imageUrl = 'https://picsum.photos/200/300?random=${DateTime.now().millisecondsSinceEpoch}';
+                imageUrl =
+                    'https://picsum.photos/500/300?random=${DateTime.now().millisecondsSinceEpoch}';
               });
               Navigator.pop(context);
             },
@@ -80,14 +81,20 @@ class _ProductRegisterScreenState extends State<ProductRegisterScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-            height: 200,
-            width: double.infinity,
-            color: Colors.white,
-            alignment: Alignment.center,
-            child: imageUrl == null
-                ? const Text('상품 이미지 없음')
-                : Image.network(imageUrl!, fit: BoxFit.contain),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: SizedBox(
+              height: 200,
+              width: double.infinity,
+              child: imageUrl == null
+                  ? const Center(child: Text('상품 이미지 없음'))
+                  : Image.network(
+                      imageUrl!,
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+            ),
           ),
           const SizedBox(height: 12),
           ElevatedButton(onPressed: pickImage, child: const Text('사진 선택')),
