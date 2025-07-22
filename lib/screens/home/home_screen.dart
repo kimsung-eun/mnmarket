@@ -14,6 +14,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<bool> isLiked = [];
   final String imagePath = 'assets/images/sunny.jpeg';
 
+  final Color brandRed = const Color(0xFFAD2426);
+
   @override
   void initState() {
     super.initState();
@@ -35,7 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     ]);
 
-    // 하트 초기 상태도 함께 초기화
     isLiked.addAll(List.generate(products.length, (_) => false));
   }
 
@@ -43,12 +44,23 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(title: const Text('멍냥마켓')),
+      appBar: AppBar(
+        toolbarHeight: 80, // 앱바 높이 증가
+        backgroundColor: brandRed,
+        title: const Text(
+          '멍냥마켓',
+          style: TextStyle(
+            fontSize: 30, // 원래 약 20 이므로 2배 크기
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            // 카테고리 선택 버튼
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -95,11 +107,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SizedBox(height: 8),
-
-            // 상품 목록
             Expanded(
               child: selectedCategory == 'cat'
-                  ? const Center(child: Text('')) // 고양이 탭은 빈 화면
+                  ? const Center(child: Text(''))
                   : ListView.builder(
                       itemCount: products.length,
                       itemBuilder: (context, index) =>
@@ -115,20 +125,18 @@ class _HomeScreenState extends State<HomeScreen> {
           if (result is ProductModel) {
             setState(() {
               products.add(result);
-              isLiked.add(false); // 새 상품 추가 시 좋아요 상태도 추가
+              isLiked.add(false);
             });
           }
         },
-        child: const Icon(Icons.edit),
+        backgroundColor: brandRed,
+        child: const Icon(Icons.edit, color: Colors.white),
       ),
     );
   }
 
   Widget _buildCategoryButton(
-    String label,
-    bool isSelected,
-    VoidCallback onPressed,
-  ) {
+      String label, bool isSelected, VoidCallback onPressed) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: isSelected ? Colors.grey[300] : Colors.grey[200],
@@ -151,26 +159,35 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 이미지
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
-                  product.imageUrl,
-                  width: 70,
-                  height: 70,
-                  fit: BoxFit.cover,
-                ),
+                child: product.imageUrl.startsWith('http')
+                    ? Image.network(
+                        product.imageUrl,
+                        width: 70,
+                        height: 70,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) =>
+                            const Icon(Icons.broken_image),
+                      )
+                    : Image.asset(
+                        product.imageUrl,
+                        width: 70,
+                        height: 70,
+                        fit: BoxFit.cover,
+                      ),
               ),
               const SizedBox(width: 12),
-
-              // 상품명, 가격
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       product.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -184,21 +201,41 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.black54,
                       ),
                     ),
+                    const SizedBox(height: 4),
+                    Text(
+                      product.description,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 13, color: Colors.black54),
+                    ),
                   ],
                 ),
               ),
-
-              // 하트 버튼
-              IconButton(
-                icon: Icon(
-                  isLiked[index] ? Icons.favorite : Icons.favorite_border,
-                  color: isLiked[index] ? Colors.pink : Colors.grey,
-                ),
-                onPressed: () {
-                  setState(() {
-                    isLiked[index] = !isLiked[index];
-                  });
-                },
+              Column(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.delete_outline),
+                    color: Colors.grey[700],
+                    onPressed: () {
+                      setState(() {
+                        products.removeAt(index);
+                        isLiked.removeAt(index);
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 4),
+                  IconButton(
+                    icon: Icon(
+                      isLiked[index] ? Icons.favorite : Icons.favorite_border,
+                      color: isLiked[index] ? Colors.pink : Colors.grey,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        isLiked[index] = !isLiked[index];
+                      });
+                    },
+                  ),
+                ],
               ),
             ],
           ),

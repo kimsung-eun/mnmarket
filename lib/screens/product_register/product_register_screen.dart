@@ -38,8 +38,7 @@ class _ProductRegisterScreenState extends State<ProductRegisterScreen> {
 
   void submit() {
     final product = ProductModel(
-      id: DateTime.now()
-          .millisecondsSinceEpoch, // 또는 toIso8601String() -> ProductModel의 타입에 따라 결정
+      id: DateTime.now().millisecondsSinceEpoch,
       name: nameController.text,
       imageUrl: imageUrl ?? '',
       price: int.tryParse(priceController.text) ?? 0,
@@ -59,11 +58,11 @@ class _ProductRegisterScreenState extends State<ProductRegisterScreen> {
             Container(
               height: 200,
               width: double.infinity,
-              color: Colors.white, // 배경 흰색
+              color: Colors.white,
               alignment: Alignment.center,
               child: imageUrl == null
                   ? const Text('상품 이미지 없음')
-                  : Image.network(imageUrl!, fit: BoxFit.contain), // 빈 공간 유지
+                  : Image.network(imageUrl!, fit: BoxFit.contain),
             ),
             const SizedBox(height: 12),
             ElevatedButton(onPressed: pickImage, child: const Text('사진 선택')),
@@ -79,9 +78,7 @@ class _ProductRegisterScreenState extends State<ProductRegisterScreen> {
                   child: TextField(
                     controller: priceController,
                     keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                    ], // 숫자만
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     decoration: const InputDecoration(labelText: '상품 가격'),
                   ),
                 ),
