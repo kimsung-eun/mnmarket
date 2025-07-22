@@ -53,18 +53,20 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        toolbarHeight: 80,
-        backgroundColor: brandRed,
-        title: const Text(
-          '멍냥마켓',
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        centerTitle: true,
-      ),
+  automaticallyImplyLeading: false, // ← 이 줄 추가
+  toolbarHeight: 80,
+  backgroundColor: brandRed,
+  title: const Text(
+    '멍냥마켓',
+    style: TextStyle(
+      fontSize: 30,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+    ),
+  ),
+  centerTitle: true,
+),
+
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(

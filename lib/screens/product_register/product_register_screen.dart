@@ -29,7 +29,7 @@ class _ProductRegisterScreenState extends State<ProductRegisterScreen> {
             onPressed: () {
               final random = DateTime.now().millisecondsSinceEpoch % 1000;
               setState(() {
-                imageUrl = 'https://picsum.photos/seed/$random/400/300';
+                imageUrl = 'https://picsum.photos/seed/$random/1000/1000';
               });
               Navigator.pop(context);
             },
@@ -60,6 +60,7 @@ class _ProductRegisterScreenState extends State<ProductRegisterScreen> {
       );
       return;
     }
+
     final product = ProductModel(
       id: DateTime.now().millisecondsSinceEpoch,
       name: nameController.text.trim(),
@@ -68,6 +69,7 @@ class _ProductRegisterScreenState extends State<ProductRegisterScreen> {
       description: descController.text.trim(),
       category: selectedCategory,
     );
+
     Navigator.pop(context, product);
   }
 
@@ -90,53 +92,56 @@ class _ProductRegisterScreenState extends State<ProductRegisterScreen> {
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: SizedBox(
-                    height: 200,
-                    width: double.infinity,
-                    child: imageUrl == null
-                        ? const Center(child: Text('상품 이미지 없음'))
-                        : Image.network(imageUrl!, fit: BoxFit.cover),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                ElevatedButton(onPressed: pickImage, child: const Text('사진 선택')),
-                const SizedBox(height: 16),
-                TextField(controller: nameController, decoration: const InputDecoration(labelText: '상품 이름')),
-                const SizedBox(height: 12),
-                Row(children: [
-                  Expanded(
-                    child: TextField(
-                      controller: priceController,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      decoration: const InputDecoration(labelText: '상품 가격'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: SizedBox(
+                      height: 300,
+                      width: double.infinity,
+                      child: imageUrl == null
+                          ? const Center(child: Text('상품 이미지 없음'))
+                          : Image.network(imageUrl!, fit: BoxFit.cover),
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  const Text('원', style: TextStyle(fontSize: 16)),
-                ]),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: descController,
-                  decoration: const InputDecoration(labelText: '상품 설명'),
-                  maxLines: 3,
-                ),
-                const SizedBox(height: 20),
-                const Text('카테고리 선택', style: TextStyle(fontSize: 16)),
-                const SizedBox(height: 6),
-                DropdownButton<String>(
-                  value: selectedCategory,
-                  isExpanded: true,
-                  items: const [
-                    DropdownMenuItem(value: 'dog', child: Text('강아지')),
-                    DropdownMenuItem(value: 'cat', child: Text('고양이')),
-                  ],
-                  onChanged: (v) => setState(() => selectedCategory = v!),
-                ),
-              ]),
+                  const SizedBox(height: 12),
+                  ElevatedButton(onPressed: pickImage, child: const Text('사진 선택')),
+                  const SizedBox(height: 16),
+                  TextField(controller: nameController, decoration: const InputDecoration(labelText: '상품 이름')),
+                  const SizedBox(height: 12),
+                  Row(children: [
+                    Expanded(
+                      child: TextField(
+                        controller: priceController,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        decoration: const InputDecoration(labelText: '상품 가격'),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    const Text('원', style: TextStyle(fontSize: 16)),
+                  ]),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: descController,
+                    decoration: const InputDecoration(labelText: '상품 설명'),
+                    maxLines: 3,
+                  ),
+                  const SizedBox(height: 20),
+                  const Text('카테고리 선택', style: TextStyle(fontSize: 16)),
+                  const SizedBox(height: 6),
+                  DropdownButton<String>(
+                    value: selectedCategory,
+                    isExpanded: true,
+                    items: const [
+                      DropdownMenuItem(value: 'dog', child: Text('강아지')),
+                      DropdownMenuItem(value: 'cat', child: Text('고양이')),
+                    ],
+                    onChanged: (v) => setState(() => selectedCategory = v!),
+                  ),
+                ],
+              ),
             ),
           ),
           Padding(
