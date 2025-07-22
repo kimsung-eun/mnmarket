@@ -7,13 +7,6 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text('로그인', style: TextStyle(color: Colors.black)),
-        iconTheme: const IconThemeData(color: Colors.black),
-      ),
       body: Stack(
         fit: StackFit.expand,
         children: [
